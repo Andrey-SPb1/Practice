@@ -16,7 +16,7 @@ public class ReplaceDemo {
     public static void main(String[] args) {
 
         String text = """
-                Object-oriented programming is a programming language model organized around\s
+                Object-oriented programming is a programming language model organized around
                 objects rather than "actions" and data rather than logic. Object-oriented programming blabla.
                 Object-oriented programming bla.
                 """;

@@ -17,7 +17,7 @@ public class Category {
     public Product[] getGoods() {
         return goods;
     }
-    public static Category[] categories = {
+    private final static Category[] CATEGORIES = {
                 new Category("Dishes", new Product[]{
                         new Product("Plate", 99.00, 7.9),
                         new Product("Bowl", 79.00, 6.4),
@@ -44,13 +44,36 @@ public class Category {
                         new Product("Orange", 99.00, 7.5),
                 })
     };
+    public static Category[] getCategories() {
+        return CATEGORIES;
+    }
     public static Product getProduct(String name) {
-        for (Category category : categories) {
+        for (Category category : CATEGORIES) {
             Product[] goods = category.getGoods();
             for (Product product : goods) {
-                if(product.getName().toLowerCase().equals(name.toLowerCase())) return product;
+                if(product.getName().equalsIgnoreCase(name)) return product;
             }
         }
         return null;
     }
+    public static Category getCategory(String name) {
+        for (Category category : CATEGORIES) {
+            if(category.getName().equalsIgnoreCase(name)) return category;
+        }
+        return null;
+    }
+    public static Category getCategory(int number) {
+        if(0 <= number && number < CATEGORIES.length) return CATEGORIES[number+1];
+        else return null;
+    }
+    public static void printCategoriesAndGoods() {
+        for (Category category : CATEGORIES) {
+            System.out.printf("Category \"%s\" has next goods:\n", category.getName());
+            Product[] goods = category.getGoods();
+            for (Product product : goods) {
+                System.out.println(product);
+            }
+        }
+    }
+
 }

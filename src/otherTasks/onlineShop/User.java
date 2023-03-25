@@ -1,5 +1,6 @@
 package otherTasks.onlineShop;
 
+import java.util.*;
 import java.util.Scanner;
 
 public class User {
@@ -16,7 +17,6 @@ public class User {
         return login;
     }
     private String getPassword(){return password;}
-
     public Basket getBasket() {
         return basket;
     }

@@ -1,5 +1,6 @@
 package otherTasks.onlineShop;
 
+import java.util.*;
 public class Basket {
     private Product[] boughtGoods;
     public Basket(Product[] boughtGoods) {

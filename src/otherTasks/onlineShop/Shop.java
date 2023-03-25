@@ -1,33 +1,34 @@
 package otherTasks.onlineShop;
 
+import java.util.*;
 import java.util.Scanner;
 
 public class Shop {
 
     private static final User[] USERS = User.getUsers();
-    private static final Category[] CATEGORIES = Category.getCategories();
+    private static final List<Category> CATEGORIES = Category.getCategories();
 
     public static void shopping(User user) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Welcome");
         while (true) {
             System.out.println("Choose a category");
-            for (int i = 0; i < CATEGORIES.length; i++) {
-                System.out.printf("%d. %s\n", i+1,CATEGORIES[i].getName());
+            for (int i = 0; i < CATEGORIES.size(); i++) {
+                System.out.printf("%d. %s\n", i+1,CATEGORIES.get(i).getName());
             }
             System.out.println("0. Exit");
             int chosenNumber = sc.nextInt();
             if(chosenNumber == 0) break;
-            Product[] products = CATEGORIES[chosenNumber-1].getGoods();
-            System.out.println(CATEGORIES[chosenNumber-1].getName());
+            List<Product> products = Objects.requireNonNull(Category.getCategory(chosenNumber - 1)).getGoods();
+            System.out.println(CATEGORIES.get(chosenNumber-1).getName());
             System.out.println("Choose a product");
-            for (int i = 0; i < products.length; i++) {
-                System.out.printf("%d. %-20s %.2f\n", i+1,products[i].getName(),products[i].getPrice());
+            for (int i = 0; i < products.size(); i++) {
+                System.out.printf("%d. %-20s %.2f\n", i+1,products.get(i).getName(),products.get(i).getPrice());
             }
             System.out.println("0. Exit");
             chosenNumber = sc.nextInt();
             if(chosenNumber == 0) break;
-            Product product = products[chosenNumber-1];
+            Product product = products.get(chosenNumber-1);
             System.out.println(product.getName());
             System.out.print("1.Add to basket\n2.Continue\n0.Exit\n");
             chosenNumber = sc.nextInt();
@@ -63,5 +64,4 @@ public class Shop {
         }
         System.out.println("We are waiting for you again");
     }
-
 }

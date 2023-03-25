@@ -1,10 +1,10 @@
 package otherTasks.onlineShop;
 
-public class Product {
+public class Product implements Comparable<Product> {
 
     private final String name;
-    private double price;
-    private double rating;
+    private final double price;
+    private final double rating;
 
     public Product(String name, double price, double rating) {
         this.name = name;
@@ -14,6 +14,10 @@ public class Product {
 
     public String getName() {
         return name;
+    }
+
+    public double getRating() {
+        return rating;
     }
 
     public double getPrice() {
@@ -27,5 +31,9 @@ public class Product {
                 ", price=" + price +
                 ", rating=" + rating +
                 '}';
+    }
+    @Override
+    public int compareTo(Product o) {
+        return name.compareTo(o.getName());
     }
 }

@@ -1,20 +1,24 @@
 package otherTasks.onlineShop;
 
 /**
- * Аутентификация пользователя. Пользователь вводит логин и пароль с клавиатуры.
- * Просмотр списка каталогов товаров.
- * Просмотр списка товаров определенного каталога.
- * Выбор товара в корзину.
- * Покупка товаров, находящихся в корзине.
- * Создаем перечисление содержащее значения для перечисленных операций.
- * Можете добавить свои операции или изменить что-то на свой вкус.
+ * Вместо массивов используйте коллекции.
+ * Создать метод, распечатывающий товары каталога, отсортированные по имени, цене или рейтингу.
+ * Добавить возможность сортировать в обратном порядке.
  */
 
 public class ShopRunner {
 
     public static void main(String[] args) {
 
-        User user = User.authenticationUser();
-        Shop.shopping(user);
+        Category.printSortGoodsByName();
+        System.out.println("-------------");
+        Category.printSortGoodsByPrice();
+        System.out.println("-------------");
+        Category.printSortGoodsByRating();
+        System.out.println("-------------");
+        Category.printSortGoodsByPriceReverse();
+
+//        User user = User.authenticationUser();
+//        Shop.shopping(user);
     }
 }

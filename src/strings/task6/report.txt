@@ -1,0 +1,5 @@
+Зарплата Ivan Ivanov               30000,21
+Зарплата Sveta Smirnova            35000,00
+Зарплата Maksim Cobolev            20000,21
+Зарплата Maria Svetikova           32000,33
+Зарплата Evgeniy Simonov           24000,17

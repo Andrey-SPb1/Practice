@@ -1,0 +1,21 @@
+Dishes
+Plate{99.00;7.90}
+Bowl{79.00;6.40}
+Cup{49.00;7.80}
+Glass{69.00;8.40}
+Fork{20.00;5.40}
+Spoon{20.50;6.90}
+Musical instruments
+Guitar{6500.00;8.90}
+Piano{43000.00;8.40}
+Drum{18000.00;7.50}
+Rock_guitar{11999.00;7.40}
+Synthesizer{9999.00;6.20}
+Meat
+Pork{500.00;7.90}
+Beef{799.00;7.40}
+Chicken{329.00;8.50}
+Fruits
+Banana{120.00;6.40}
+Apple{80.00;8.20}
+Orange{99.00;7.50}

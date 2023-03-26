@@ -24,7 +24,11 @@ public class Category {
         return goods;
     }
 
-    private final static List<Category> CATEGORIES = List.of(
+    public static void setCategories(List<Category> categories) {
+        Category.categories = categories;
+    }
+
+    private static List<Category> categories = List.of(
                 new Category("Dishes", List.of(
                         new Product("Plate", 99.00, 7.9),
                         new Product("Bowl", 79.00, 6.4),
@@ -37,7 +41,7 @@ public class Category {
                         new Product("Guitar", 6500.00, 8.9),
                         new Product("Piano", 43000.00, 8.4),
                         new Product("Drum", 18000.00, 7.5),
-                        new Product("Rock guitar", 11999.00, 7.4),
+                        new Product("Rock_guitar", 11999.00, 7.4),
                         new Product("Synthesizer", 9999.00, 6.2)
                 )),
                 new Category("Meat", List.of(
@@ -51,10 +55,10 @@ public class Category {
                         new Product("Orange", 99.00, 7.5)
                 )));
     public static List<Category> getCategories() {
-        return CATEGORIES;
+        return categories;
     }
     public static Product getProduct(String name) {
-        for (Category category : CATEGORIES) {
+        for (Category category : categories) {
             List<Product> goods = category.getGoods();
             for (Product product : goods) {
                 if(product.getName().equalsIgnoreCase(name)) return product;
@@ -62,28 +66,13 @@ public class Category {
         }
         return null;
     }
-    public static Category getCategory(String name) {
-        for (Category category : CATEGORIES) {
-            if(category.getName().equalsIgnoreCase(name)) return category;
-        }
-        return null;
-    }
     public static Category getCategory(int number) {
-        if(0 <= number && number < CATEGORIES.size()) return CATEGORIES.get(number);
+        if(0 <= number && number < categories.size()) return categories.get(number);
         else return null;
-    }
-    public static void printCategoriesAndGoods() {
-        for (Category category : CATEGORIES) {
-            System.out.printf("Category \"%s\" has next goods:\n", category.getName());
-            List<Product> goods = category.getGoods();
-            for (Product product : goods) {
-                System.out.println(product);
-            }
-        }
     }
     public static void printSortGoodsByName() {
         Set<Product> sortGoods = new TreeSet<>();
-        for (Category category : CATEGORIES) {
+        for (Category category : categories) {
             List<Product> goods = category.getGoods();
             sortGoods.addAll(goods);
         }
@@ -91,32 +80,12 @@ public class Category {
     }
     public static void printSortGoodsByPrice() {
         List<Product> sortGoods = new ArrayList<>();
-        for (Category category : CATEGORIES) {
+        for (Category category : categories) {
             List<Product> goods = category.getGoods();
             sortGoods.addAll(goods);
         }
         MaxPriceComparator maxPrice = new MaxPriceComparator();
         sortGoods.sort(maxPrice);
-        sortGoods.forEach(System.out::println);
-    }
-    public static void printSortGoodsByPriceReverse() {
-        List<Product> sortGoods = new ArrayList<>();
-        for (Category category : CATEGORIES) {
-            List<Product> goods = category.getGoods();
-            sortGoods.addAll(goods);
-        }
-        MinPriceComparator minPrice = new MinPriceComparator();
-        sortGoods.sort(minPrice);
-        sortGoods.forEach(System.out::println);
-    }
-    public static void printSortGoodsByRating() {
-        List<Product> sortGoods = new ArrayList<>();
-        for (Category category : CATEGORIES) {
-            List<Product> goods = category.getGoods();
-            sortGoods.addAll(goods);
-        }
-        MaxRatingComparator maxRating = new MaxRatingComparator();
-        sortGoods.sort(maxRating);
         sortGoods.forEach(System.out::println);
     }
 }

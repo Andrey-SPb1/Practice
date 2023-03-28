@@ -13,6 +13,9 @@ public class Shop {
     private static final List<Category> CATEGORIES = Category.getCategories();
 
     public static void startShopping() {
+        Category.addListGoods();
+        User.aadListUsers();
+        String lastUserLogin = null;
         while(true) {
             User user = null;
             Scanner sc = new Scanner(System.in);
@@ -20,24 +23,25 @@ public class Shop {
             int chosenNumber = sc.nextInt();
             if (chosenNumber == 0) System.exit(0);
             else if (chosenNumber == 1) user = User.registrationUser();
-            else if (chosenNumber == 2) user = User.authenticationUser();
+            else if (chosenNumber == 2) user = User.authenticationUser(lastUserLogin);
             assert user != null : ":(";
+            lastUserLogin = user.getLogin();
             System.out.println("Welcome " + user.getLogin());
             while (true) {
                 System.out.println("Choose a category");
                 for (int i = 0; i < CATEGORIES.size(); i++) {
-                    System.out.printf("%d. %s\n", i + 1, CATEGORIES.get(i).getName());
+                    System.out.printf("%d.%s\n", i + 1, CATEGORIES.get(i).getName());
                 }
-                System.out.println("0. Exit");
+                System.out.println("0.Exit");
                 chosenNumber = sc.nextInt();
                 if (chosenNumber == 0) break;
                 List<Product> products = Objects.requireNonNull(Category.getCategory(chosenNumber - 1)).getGoods();
                 System.out.println(CATEGORIES.get(chosenNumber - 1).getName());
                 System.out.println("Choose a product");
                 for (int i = 0; i < products.size(); i++) {
-                    System.out.printf("%d. %-20s %.2f\n", i + 1, products.get(i).getName(), products.get(i).getPrice());
+                    System.out.printf("%d.%-20s %.2f\n", i + 1, products.get(i).getName(), products.get(i).getPrice());
                 }
-                System.out.println("0. Exit");
+                System.out.println("0.Exit");
                 chosenNumber = sc.nextInt();
                 if (chosenNumber == 0) break;
                 Product product = products.get(chosenNumber - 1);
@@ -49,7 +53,7 @@ public class Shop {
                     user.getBasket().setBoughtProduct(product);
                     System.out.println(product.getName() + " added to basket");
                 }
-                System.out.print("1.Go to basket\n2.Continue startShopping\n0.Exit\n");
+                System.out.print("1.Go to basket\n2.Continue shopping\n0.Exit\n");
                 chosenNumber = sc.nextInt();
                 if (chosenNumber == 0) break;
                 if (chosenNumber == 1) {
@@ -61,7 +65,7 @@ public class Shop {
                         sum += boughtProduct.getPrice();
                     }
                     System.out.println("In the basket of goods for " + sum);
-                    System.out.print("1.Buy goods\n2.Continue startShopping\n0.Exit\n");
+                    System.out.print("1.Buy goods\n2.Continue shopping\n0.Exit\n");
                     chosenNumber = sc.nextInt();
                     if (chosenNumber == 0) break;
                     else if (chosenNumber == 1) {
@@ -73,6 +77,7 @@ public class Shop {
                     if (chosenNumber == 2) break;
                 }
             }
+            user.getBasket().basketInFile();
             System.out.println("We are waiting for you again");
         }
     }

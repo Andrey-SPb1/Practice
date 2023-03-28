@@ -5,7 +5,7 @@ Cup{49.00;7.80}
 Glass{69.00;8.40}
 Fork{20.00;5.40}
 Spoon{20.50;6.90}
-Musical instruments
+Musical_instruments
 Guitar{6500.00;8.90}
 Piano{43000.00;8.40}
 Drum{18000.00;7.50}

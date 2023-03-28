@@ -1,10 +1,14 @@
 package otherTasks.onlineShop;
 
 import otherTasks.onlineShop.comparatorProduct.MaxPriceComparator;
-import otherTasks.onlineShop.comparatorProduct.MaxRatingComparator;
-import otherTasks.onlineShop.comparatorProduct.MinPriceComparator;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.*;
+import java.util.regex.Pattern;
 
 public class Category {
 
@@ -24,41 +28,51 @@ public class Category {
         return goods;
     }
 
-    public static void setCategories(List<Category> categories) {
-        Category.categories = categories;
+    private static final List<Category> CATEGORIES = new ArrayList<>();
+
+    public static void addListGoods() {
+
+        File file = Path.of("src", "otherTasks", "onlineShop", "dataStore", "goods.txt").toFile();
+
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
+
+            String line;
+            String regexCategory = "\\w+";
+            String regexGoods = "\\w+.\\d+\\.\\d+.\\d\\.\\d+."; // Plate{99.00;7.90}
+            String category = bufferedReader.readLine();
+            List<Product> goods = new ArrayList<>();
+
+            while (true) {
+                line = bufferedReader.readLine();
+                if(line == null) {
+                    CATEGORIES.add(new Category(category,goods));
+                    break;
+                }
+                if (Pattern.matches(regexCategory, line)) {
+                    CATEGORIES.add(new Category(category,goods));
+                    category = line;
+                    goods = new ArrayList<>();
+                }
+                else if(Pattern.matches(regexGoods,line)) {
+                    StringTokenizer st = new StringTokenizer(line, " {};");
+                    String name = st.nextToken();
+                    double price = Double.parseDouble(st.nextToken());
+                    double rating = Double.parseDouble(st.nextToken());
+                    goods.add(new Product(name, price, rating));
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
-    private static List<Category> categories = List.of(
-                new Category("Dishes", List.of(
-                        new Product("Plate", 99.00, 7.9),
-                        new Product("Bowl", 79.00, 6.4),
-                        new Product("Cup", 49.00, 7.8),
-                        new Product("Glass", 69.00, 8.4),
-                        new Product("Fork", 20.00, 5.4),
-                        new Product("Spoon", 20.50, 6.9)
-                )),
-                new Category("Musical instruments", List.of(
-                        new Product("Guitar", 6500.00, 8.9),
-                        new Product("Piano", 43000.00, 8.4),
-                        new Product("Drum", 18000.00, 7.5),
-                        new Product("Rock_guitar", 11999.00, 7.4),
-                        new Product("Synthesizer", 9999.00, 6.2)
-                )),
-                new Category("Meat", List.of(
-                        new Product("Pork", 500.00, 7.9),
-                        new Product("Beef", 799.00, 7.4),
-                        new Product("Chicken", 329.00, 8.5)
-                )),
-                new Category("Fruits", List.of(
-                        new Product("Banana", 120.00, 6.4),
-                        new Product("Apple", 80.00, 8.2),
-                        new Product("Orange", 99.00, 7.5)
-                )));
     public static List<Category> getCategories() {
-        return categories;
+        return CATEGORIES;
     }
     public static Product getProduct(String name) {
-        for (Category category : categories) {
+        for (Category category : CATEGORIES) {
             List<Product> goods = category.getGoods();
             for (Product product : goods) {
                 if(product.getName().equalsIgnoreCase(name)) return product;
@@ -67,12 +81,12 @@ public class Category {
         return null;
     }
     public static Category getCategory(int number) {
-        if(0 <= number && number < categories.size()) return categories.get(number);
+        if(0 <= number && number < CATEGORIES.size()) return CATEGORIES.get(number);
         else return null;
     }
     public static void printSortGoodsByName() {
         Set<Product> sortGoods = new TreeSet<>();
-        for (Category category : categories) {
+        for (Category category : CATEGORIES) {
             List<Product> goods = category.getGoods();
             sortGoods.addAll(goods);
         }
@@ -80,7 +94,7 @@ public class Category {
     }
     public static void printSortGoodsByPrice() {
         List<Product> sortGoods = new ArrayList<>();
-        for (Category category : categories) {
+        for (Category category : CATEGORIES) {
             List<Product> goods = category.getGoods();
             sortGoods.addAll(goods);
         }
